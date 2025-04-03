@@ -23,6 +23,34 @@ msg_ok "Installed Dependencies"
 msg_info "Installing NGINX"
 $STD apt-get update
 $STD apt-get install -y nginx
+
+cat <<EOF >/etc/nginx/conf.d/www.example.com.conf
+server {
+    listen 80;
+    listen [::]:80;
+    server_name www.example.com; 
+
+    root /var/www/html/www.example.com;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+EOF
+mkdir -p /var/www/html/www.example.com
+
+cat <<EOF >/var/www/html/www.example.com/index.html
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <h1>Greetings from NGINX1</h1>
+        <p>aka Hello World!</p>
+    </body>
+</html>
+EOF
+
 systemctl start nginx
 systemctl enable --now -q nginx.service
 msg_ok "Installed NGINX"
