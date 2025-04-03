@@ -4,6 +4,10 @@ Options are displayed to users in a dialog box format. Once the user makes their
 <p align="center">
 Be cautious and thoroughly evaluate scripts and automation tasks obtained from external sources. <a href="https://github.com/DrEVILish/Proxmox/blob/main/CODE-AUDIT.md">Read more</a>
 </p>
+
+##
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/drevilish/proxmox/main/ct/[container-name].sh)"
+
 <p align="center">
 This is a fork of ttecks original work before the community changes, with minor updates and additions.
 </p>
