@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 source <(curl -s https://raw.githubusercontent.com/DrEVILish/Proxmox/main/misc/build.func)
 # Copyright (c) 2021-2024 tteck
+# Copyright (c) 2025 Ryan Freeman
 # Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
@@ -56,10 +57,17 @@ function default_settings() {
 function update_script() {
 header_info
 if [[ ! -d /var/lib/whisparr ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
-msg_info "Updating $APP LXC"
+msg_info "Updating LXC OS"
 apt-get update &>/dev/null
 apt-get -y upgrade &>/dev/null
-msg_ok "Updated $APP LXC"
+msg_info "Updating $APP"
+systemctl stop whisparr.service
+cd /var/lib/whisparr/
+curl -fsSL 'https://whisparr.servarr.com/v1/update/nightly/updatefile?os=linux&runtime=netcore&arch=x64' -o whisparr.tar.gz
+tar -xvzf whisparr.tar.gz
+mv Whisparr /opt
+chmod 775 /opt/Whisparr
+msg_ok "Updated $APP and LXC OS"
 exit
 }
 
