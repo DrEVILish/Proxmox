@@ -65,8 +65,10 @@ systemctl stop whisparr.service
 cd /var/lib/whisparr/
 curl -fsSL 'https://whisparr.servarr.com/v1/update/nightly/updatefile?os=linux&runtime=netcore&arch=x64' -o whisparr.tar.gz
 tar -xvzf whisparr.tar.gz
+rm -rf /opt/Whisparr
 mv Whisparr /opt
 chmod 775 /opt/Whisparr
+systemctl start whisparr.service
 msg_ok "Updated $APP and LXC OS"
 exit
 }
